@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
     let padding: CGFloat = 5
-    let myFeaturesHeight = 30
+    let myFeaturesHeight = 150
 
     
     override func viewDidLoad() {
@@ -41,6 +41,7 @@ class ViewController: UIViewController {
         let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
         
         featuredEvents = [e1,e2]
+        myEvents = []
         
         for e in featuredEvents{
             if(e.isMyEvent){
@@ -85,7 +86,7 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 14)
+        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
         featuredLabel.textColor = .black
         view.addSubview(featuredLabel)
         
@@ -93,9 +94,9 @@ class ViewController: UIViewController {
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 14)
+        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
         myLabel.textColor = .black
-        view.addSubview(featuredLabel)
+        view.addSubview(myLabel)
         
         searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +111,7 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             myLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            myLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            myLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             myLabel.widthAnchor.constraint(equalToConstant: 300),
             myLabel.heightAnchor.constraint(equalToConstant: 30)
             ])
@@ -124,14 +125,14 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             featuredLabel.topAnchor.constraint(equalTo: myEventsCollectionView.bottomAnchor, constant: 10),
-            featuredLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            featuredLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             featuredLabel.widthAnchor.constraint(equalToConstant: 300),
             featuredLabel.heightAnchor.constraint(equalToConstant: 30)
             ])
         
         NSLayoutConstraint.activate([
             searchBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            searchBar.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchBar.widthAnchor.constraint(equalToConstant: 300),
             searchBar.heightAnchor.constraint(equalToConstant: 30)
             ])
@@ -160,5 +161,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+
 
 
