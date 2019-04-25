@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
     let padding: CGFloat = 5
-    let myFeaturesHeight = 40
+    let myFeaturesHeight = 30
 
     
     override func viewDidLoad() {
@@ -81,14 +81,84 @@ class ViewController: UIViewController {
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
         view.addSubview(myEventsCollectionView)
         
+        featuredLabel = UILabel()
+        featuredLabel.translatesAutoresizingMaskIntoConstraints = false
+        featuredLabel.text = "Featured Events"
+        featuredLabel.textAlignment = .center
+        featuredLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 14)
+        featuredLabel.textColor = .black
+        view.addSubview(featuredLabel)
+        
+        myLabel = UILabel()
+        myLabel.translatesAutoresizingMaskIntoConstraints = false
+        myLabel.text = "My Events"
+        myLabel.textAlignment = .center
+        myLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 14)
+        myLabel.textColor = .black
+        view.addSubview(featuredLabel)
+        
+        searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "Find an Event"
+        //searchBar.delegate = self
+        view.addSubview(searchBar)
+        
         setupConstraints()
     }
 
     func setupConstraints() {
         
-        // TODO implement
+        NSLayoutConstraint.activate([
+            myLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            myLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            myLabel.widthAnchor.constraint(equalToConstant: 300),
+            myLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            myEventsCollectionView.topAnchor.constraint(equalTo: myLabel.bottomAnchor, constant: 10),
+            myEventsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            myEventsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            myEventsCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(myFeaturesHeight))
+            ])
+        
+        NSLayoutConstraint.activate([
+            featuredLabel.topAnchor.constraint(equalTo: myEventsCollectionView.bottomAnchor, constant: 10),
+            featuredLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            featuredLabel.widthAnchor.constraint(equalToConstant: 300),
+            featuredLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            searchBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            searchBar.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            searchBar.widthAnchor.constraint(equalToConstant: 300),
+            searchBar.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            featuredCollectionView.topAnchor.constraint(equalTo: myEventsCollectionView.bottomAnchor, constant: 10),
+            featuredCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            featuredCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            featuredCollectionView.bottomAnchor.constraint(equalTo: searchBar.topAnchor, constant: -10)
+            ])
         
     }
 
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == self.featuredCollectionView{
+            let length = (collectionView.frame.width - 3*padding)/2.0
+            return CGSize(width: length, height: length)
+        }
+        let length = (collectionView.frame.width - 4*padding)/3.0
+        return CGSize(width: length, height: CGFloat(myFeaturesHeight))
+    }
+    
+}
+
 
