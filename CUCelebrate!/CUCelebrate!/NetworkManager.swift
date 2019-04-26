@@ -10,10 +10,9 @@ import Foundation
 import Alamofire
 
 class NetworkManager {
-    
     let queryEndpoint = "TODO add endpoint to make a query"
     
-    static func getQueryResults(query: Query) {
+    static func getResultsFromQuery(query: Query) {
         // TODO implement
     }
 }

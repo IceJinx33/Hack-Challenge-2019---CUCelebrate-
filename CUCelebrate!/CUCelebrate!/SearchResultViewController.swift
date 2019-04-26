@@ -17,9 +17,9 @@ class SearchResultViewController: UIViewController {
     let SEARCH_REUSE_ID = "Search Reuse Identifier"
     
     init(data: [Event]){
-        searchResultsDataSource = EventCollectionViewDataSource(events: data, reuseIdentifier: SEARCH_REUSE_ID)
-        searchResultsDelegate = EventCollectionViewDelegate()
         super.init(nibName: nil, bundle: nil)
+        searchResultsDataSource = EventCollectionViewDataSource(events: data, reuseIdentifier: SEARCH_REUSE_ID)
+        searchResultsDelegate = EventCollectionViewDelegate(events: data, reuseIdentifier: SEARCH_REUSE_ID, view: self)
     }
     
     override func viewDidLoad() {
