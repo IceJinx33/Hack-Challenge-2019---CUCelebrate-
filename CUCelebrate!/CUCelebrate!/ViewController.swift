@@ -44,8 +44,18 @@ class ViewController: UIViewController {
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
-        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
-        let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
+        let e1 = Event(eventName: "CU Downtown",
+                       eventDate: "Sep 1, 2018",
+                       eventTime: "1 PM EDT",
+                       eventVenue: "Downtown Ithaca NY",
+                       description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!",
+                       image: UIImage(named: "e1")!)
+        let e2 = Event(eventName: "Dragon Day 2019",
+                       eventDate: "Mar 29, 2019",
+                       eventTime: "12 PM EDT",
+                       eventVenue: "Arts Quad",
+                       description: "Come see the dragon and the phoenix parade around campus!!" ,
+                       image: UIImage(named: "e2")!)
         
         featuredEvents = [e1,e2]
         myEvents = []

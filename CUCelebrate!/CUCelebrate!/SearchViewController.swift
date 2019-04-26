@@ -6,6 +6,10 @@
 //  Copyright © 2019 Cornell AppDev. All rights reserved.
 //
 
+
+// WARNING: DEPRECATED
+//          Due to an unnotified plan, this class will never be used.
+
 import UIKit
 
 class SearchViewController: UIViewController {
