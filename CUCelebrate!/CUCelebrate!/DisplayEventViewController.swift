@@ -21,6 +21,7 @@ class DisplayEventViewController: UIViewController {
     var mapIcon: UIImageView!
     var mapButton: UIButton!
     var checkButton: UIButton!
+    var barButton: UIBarButtonItem!
     
     let labelHeight = 20
     
@@ -118,7 +119,7 @@ class DisplayEventViewController: UIViewController {
         mapButton.translatesAutoresizingMaskIntoConstraints = false
         mapButton.setTitle("Find Location on Map", for: .normal)
         mapButton.setTitleColor(.blue, for: .normal)
-        //mapButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
+        mapButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
         view.addSubview(mapButton)
         
         checkButton = UIButton()
@@ -133,6 +134,10 @@ class DisplayEventViewController: UIViewController {
         checkButton.setBackgroundImage(UIImage(named: "check"), for: .selected)
         checkButton.addTarget(self, action: #selector(checkBox), for: .touchUpInside)
         view.addSubview(checkButton)
+        
+        barButton = UIBarButtonItem(title: "Save", style: UIBarButtonItem.Style.plain, target: self, action: #selector(saveWork))
+        barButton.title = "Save"
+        navigationItem.setRightBarButton(barButton, animated: true)
         
         setupConstraints()
     }
@@ -220,7 +225,16 @@ class DisplayEventViewController: UIViewController {
     @objc func checkBox(){
         checkButton.isSelected = !checkButton.isSelected
         placeholderEvent.isMyEvent = !placeholderEvent.isMyEvent
-        delegate?.MyEventChanged(to: placeholderEvent)
+    }
+    
+    @objc func saveWork(){
+        delegate?.MyEventChanged(to: placeholderEvent, newIsMyEventChanged: placeholderEvent.isMyEvent)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func findLocation(){
+        let navViewController = MapViewController()
+        navigationController?.pushViewController(navViewController, animated: true)
     }
 
     /*

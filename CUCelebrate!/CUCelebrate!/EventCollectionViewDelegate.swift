@@ -15,9 +15,10 @@ class EventCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     
     private var events: [Event]
     private var reuseIdentifier: String
-    private var view: UIViewController
+    private var view: ViewController
+    private var cellHeight: CGFloat = 200
     
-    init(events: [Event], reuseIdentifier: String, view: UIViewController) {
+    init(events: [Event], reuseIdentifier: String, view: ViewController) {
         self.events = events
         self.reuseIdentifier = reuseIdentifier
         self.view = view
@@ -34,6 +35,7 @@ class EventCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = events[indexPath.row]
         let navViewController = DisplayEventViewController(placeholderEvent: event)
+        navViewController.delegate = view
         view.navigationController?.pushViewController(navViewController, animated: true)
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeMyEventDelegate: class {
-    func MyEventChanged(to e: Event)
+    func MyEventChanged(to e: Event, newIsMyEventChanged: Bool)
 }
 
 class ViewController: UIViewController {
@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     
     var featuredEvents: [Event]!
     var myEvents: [Event]!
+    var tempMyEvents: [Event]!
     var featuredLabel: UILabel!
     var myLabel: UILabel!
     var searchBar: UISearchBar!
@@ -46,16 +47,19 @@ class ViewController: UIViewController {
         
         let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
         let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
+        let e3 = Event(eventName: "CIS Formal: Party at Gatsby's", eventDate: "Apr 27, 2019", eventTime: "9 PM EDT", eventVenue: "The Statler Hotel", description: "Join ACSU, WICC and URMC to celebrate the end of the semester with a Gatsby themed formal at the Statler Hotel! It will be a fun filled night with friends, food, dancing and more!!" + "\n" + "Suggested Attire: Semi-Formal" + "\n" + "Tickets are $15 each." , image: UIImage(named: "e3")!)
+        let e4 = Event(eventName: "Cornell Chamber Orchestra Concert", eventDate: "Apr 26, 2019", eventTime: "7 PM EDT", eventVenue: "Barnes Hall", description: "We will by playing music by Drdla, Bach, Grieg, Holst as well as compositions by students. This event is free and open to the public! We look forward to seeing you there!" , image: UIImage(named: "e4")!)
+        let e5 = Event(eventName: "Mock Shaadi 2019", eventDate: "Apr 26, 2019", eventTime: "8 PM EDT", eventVenue: "Biotech G10", description: "Hosted by Cornell University's South Asian Council." + "\n" + "It’s shaadi season! SAC’s Mock Shaadi is an annual interfaith and intercultural mock wedding celebration that showcases and celebrates that richness and diversity of South Asian cultural and religious wedding traditions. Come through for a night filled with delicious food, music, and dancing!" , image: UIImage(named: "e5")!)
         
-        featuredEvents = [e1,e2]
+        featuredEvents = [e1,e2,e3,e4,e5]
         myEvents = []
-     
-        for e in featuredEvents{
-            if(e.isMyEvent == true){
-                myEvents.append(e)
+        
+        for event in featuredEvents{
+            if(event.isMyEvent == true){
+                myEvents.append(event)
             }
         }
-        
+  
         featuredCollectionViewDelgate = EventCollectionViewDelegate(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID, view: self)
         featuredCollectionViewDataSource = EventCollectionViewDataSource(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID)
         
@@ -111,6 +115,7 @@ class ViewController: UIViewController {
         myLabel.textColor = .black
         view.addSubview(myLabel)
         
+        //searchBar not yet implemented
         searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Find an Event"
@@ -165,8 +170,17 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ChangeMyEventDelegate{
-    func MyEventChanged(to e: Event) {
-        viewDidLoad()
+    func MyEventChanged(to e: Event, newIsMyEventChanged: Bool) {
+        e.isMyEvent = newIsMyEventChanged
+        myEvents = []
+        for event in featuredEvents{
+            if(event.isMyEvent == true){
+                myEvents.append(event)
+            }
+        }
+        myEventsCollectionViewDataSource.setEvents(myEvents)
+        myEventsCollectionViewDelegate.setEvents(myEvents)
+        myEventsCollectionView.reloadData()
     }
     
 }
