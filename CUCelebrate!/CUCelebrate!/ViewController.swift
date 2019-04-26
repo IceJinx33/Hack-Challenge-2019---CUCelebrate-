@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
     let padding: CGFloat = 5
-    let myFeaturesHeight = 40
+    let myHeight = 200
 
     
     override func viewDidLoad() {
@@ -37,10 +37,13 @@ class ViewController: UIViewController {
         title = "Events"
         view.backgroundColor = .lightGray
         
+        let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
+        
         let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!" ,isMyEvent: true, image: UIImage(named: "e1")!)
         let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
         
         featuredEvents = [e1,e2]
+        myEvents = []
         
         for e in featuredEvents{
             if(e.isMyEvent){
@@ -56,6 +59,7 @@ class ViewController: UIViewController {
         featuredLayout.scrollDirection = .vertical
         featuredLayout.minimumInteritemSpacing = padding
         featuredLayout.minimumLineSpacing = padding*2
+        featuredLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
@@ -64,13 +68,18 @@ class ViewController: UIViewController {
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
+        
         view.addSubview(featuredCollectionView)
+        
+        myEventsCollectionViewDelegate = EventCollectionViewDelegate()
+        myEventsCollectionViewDataSource = EventCollectionViewDataSource(events: myEvents, reuseIdentifier: MY_EVENTS_REUSE_ID)
         
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
         myLayout.minimumInteritemSpacing = padding
         myLayout.minimumLineSpacing = padding
+        myLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
@@ -81,14 +90,73 @@ class ViewController: UIViewController {
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
         view.addSubview(myEventsCollectionView)
         
+        featuredLabel = UILabel()
+        featuredLabel.translatesAutoresizingMaskIntoConstraints = false
+        featuredLabel.text = "Featured Events"
+        featuredLabel.textAlignment = .center
+        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
+        featuredLabel.textColor = .black
+        view.addSubview(featuredLabel)
+        
+        myLabel = UILabel()
+        myLabel.translatesAutoresizingMaskIntoConstraints = false
+        myLabel.text = "My Events"
+        myLabel.textAlignment = .center
+        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
+        myLabel.textColor = .black
+        view.addSubview(myLabel)
+        
+        searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "Find an Event"
+        searchBar.layer.cornerRadius = 10
+        searchBar.searchBarStyle = .minimal
+        searchBar.backgroundColor = .white
+        //searchBar.delegate = self
+        view.addSubview(searchBar)
+        
         setupConstraints()
     }
 
     func setupConstraints() {
         
-        // TODO implement
+        NSLayoutConstraint.activate([
+            myLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            myLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            myLabel.widthAnchor.constraint(equalToConstant: 300),
+            myLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            myEventsCollectionView.topAnchor.constraint(equalTo: myLabel.bottomAnchor, constant: 10),
+            myEventsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            myEventsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            myEventsCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(myHeight))
+            ])
+        
+        NSLayoutConstraint.activate([
+            featuredLabel.topAnchor.constraint(equalTo: myEventsCollectionView.bottomAnchor, constant: 10),
+            featuredLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            featuredLabel.widthAnchor.constraint(equalToConstant: 300),
+            featuredLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            searchBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchBar.widthAnchor.constraint(equalToConstant: 300),
+            searchBar.heightAnchor.constraint(equalToConstant: 40)
+            ])
+        
+        NSLayoutConstraint.activate([
+            featuredCollectionView.topAnchor.constraint(equalTo: featuredLabel.bottomAnchor, constant: 10),
+            featuredCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            featuredCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            featuredCollectionView.bottomAnchor.constraint(equalTo: searchBar.topAnchor, constant: -10)
+            ])
         
     }
 
 }
+
 

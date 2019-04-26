@@ -19,7 +19,7 @@ class Event {
     var isMyEvent: Bool
     var image: UIImage
     
-    init(eventName: String, eventDate: String, eventTime: String, eventVenue: String, description: String, isMyEvent: Bool = false, image: UIImage){
+    init(eventName: String, eventDate: String, eventTime: String, eventVenue: String, description: String, isMyEvent: Bool = false, image: UIImage = UIImage(named: "cu_placeholder")!){
         self.eventName = eventName
         self.eventDate = eventDate
         self.eventTime = eventTime
