@@ -10,4 +10,31 @@ import UIKit
 
 class EventCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     
+    // choosing private access here to force encapsulation
+    // Use setEvents(_:) and getEvents() to set and get the event array.
+    
+    private var events: [Event]
+    private var reuseIdentifier: String
+    private var view: UIViewController
+    
+    init(events: [Event], reuseIdentifier: String, view: UIViewController) {
+        self.events = events
+        self.reuseIdentifier = reuseIdentifier
+        self.view = view
+    }
+    
+    func setEvents(_ newEvents: [Event]){
+        events = newEvents
+    }
+    
+    func getReuseIdentifier() -> String { return reuseIdentifier }
+    
+    func getEvents() -> [Event] { return events }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let event = events[indexPath.row]
+        let navViewController = DisplayEventViewController(placeholderEvent: event)
+        view.navigationController?.pushViewController(navViewController, animated: true)
+    }
+    
 }
