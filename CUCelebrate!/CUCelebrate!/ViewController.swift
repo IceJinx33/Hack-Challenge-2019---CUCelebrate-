@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ChangeMyEventDelegate: class {
+    func MyEventChanged(to e: Event)
+}
+
 class ViewController: UIViewController {
     
     var featuredCollectionView: UICollectionView!
@@ -30,6 +34,7 @@ class ViewController: UIViewController {
     let padding: CGFloat = 5
     let myHeight = 200
 
+    weak var delegate: ChangeMyEventDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,19 +44,19 @@ class ViewController: UIViewController {
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
-        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!" ,isMyEvent: true, image: UIImage(named: "e1")!)
+        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
         let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
         
         featuredEvents = [e1,e2]
         myEvents = []
-        
+     
         for e in featuredEvents{
-            if(e.isMyEvent){
-                  myEvents.append(e)
+            if(e.isMyEvent == true){
+                myEvents.append(e)
             }
         }
         
-        featuredCollectionViewDelgate = EventCollectionViewDelegate()
+        featuredCollectionViewDelgate = EventCollectionViewDelegate(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID, view: self)
         featuredCollectionViewDataSource = EventCollectionViewDataSource(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID)
         
         // featured events collection layout
@@ -71,9 +76,9 @@ class ViewController: UIViewController {
         
         view.addSubview(featuredCollectionView)
         
-        myEventsCollectionViewDelegate = EventCollectionViewDelegate()
+        myEventsCollectionViewDelegate = EventCollectionViewDelegate(events: myEvents, reuseIdentifier: MY_EVENTS_REUSE_ID, view: self)
         myEventsCollectionViewDataSource = EventCollectionViewDataSource(events: myEvents, reuseIdentifier: MY_EVENTS_REUSE_ID)
-        
+
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
@@ -159,4 +164,10 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: ChangeMyEventDelegate{
+    func MyEventChanged(to e: Event) {
+        viewDidLoad()
+    }
+    
+}
 

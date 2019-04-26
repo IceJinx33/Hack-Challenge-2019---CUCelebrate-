@@ -30,7 +30,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         name = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        name.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         name.adjustsFontSizeToFitWidth = true
         name.minimumScaleFactor = 10
         contentView.addSubview(name)
@@ -45,7 +45,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         placeTime = UILabel()
         placeTime.translatesAutoresizingMaskIntoConstraints = false
-        placeTime.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        placeTime.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         placeTime.adjustsFontSizeToFitWidth = true
         placeTime.minimumScaleFactor = 10
         contentView.addSubview(placeTime)
@@ -86,7 +86,7 @@ class EventCollectionViewCell: UICollectionViewCell {
             placeTime.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 4*padding),
             placeTime.topAnchor.constraint(equalTo: name.bottomAnchor, constant: padding),
             placeTime.heightAnchor.constraint(equalToConstant: labelHeight),
-            date.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*padding)
+            placeTime.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*padding)
             ])
         
     }

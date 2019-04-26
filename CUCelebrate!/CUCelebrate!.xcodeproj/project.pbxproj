@@ -12,6 +12,7 @@
 		5D8E9EFE2270F58800120C6F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EFD2270F58800120C6F /* Event.swift */; };
 		5D8E9F022270FDA300120C6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E9F012270FDA300120C6F /* Assets.xcassets */; };
 		5D8E9F042271015100120C6F /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9F032271015100120C6F /* EventCollectionViewCell.swift */; };
+		5D8E9F082272744700120C6F /* DisplayEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9F072272744700120C6F /* DisplayEventViewController.swift */; };
 		96274833B16ADA0BCFA66E03 /* Pods_CUCelebrate_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7255EA7FDC48DB162645C0FA /* Pods_CUCelebrate_.framework */; };
 		AAFABB1C22714E420022BDBC /* EventCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */; };
 		AAFABB1E22714E5D0022BDBC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */; };
@@ -26,6 +27,7 @@
 		5D8E9EFD2270F58800120C6F /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		5D8E9F012270FDA300120C6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D8E9F032271015100120C6F /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		5D8E9F072272744700120C6F /* DisplayEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventViewController.swift; sourceTree = "<group>"; };
 		6595D9A790D0D4BC7BAE23E0 /* Pods-CUCelebrate!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CUCelebrate!.release.xcconfig"; path = "Target Support Files/Pods-CUCelebrate!/Pods-CUCelebrate!.release.xcconfig"; sourceTree = "<group>"; };
 		685941DC97022CD887508B18 /* Pods-CUCelebrate!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CUCelebrate!.debug.xcconfig"; path = "Target Support Files/Pods-CUCelebrate!/Pods-CUCelebrate!.debug.xcconfig"; sourceTree = "<group>"; };
 		7255EA7FDC48DB162645C0FA /* Pods_CUCelebrate_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CUCelebrate_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,7 @@
 				5D8E9F012270FDA300120C6F /* Assets.xcassets */,
 				5D8E9EF72270F47500120C6F /* Info.plist */,
 				AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */,
+				5D8E9F072272744700120C6F /* DisplayEventViewController.swift */,
 				AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */,
 				AAFABB1F227150160022BDBC /* EventCollectionViewDataSource.swift */,
 			);
@@ -219,6 +222,7 @@
 				AAFABB1C22714E420022BDBC /* EventCollectionViewDelegate.swift in Sources */,
 				5D8E9EEE2270F47100120C6F /* ViewController.swift in Sources */,
 				AAFABB20227150160022BDBC /* EventCollectionViewDataSource.swift in Sources */,
+				5D8E9F082272744700120C6F /* DisplayEventViewController.swift in Sources */,
 				5D8E9F042271015100120C6F /* EventCollectionViewCell.swift in Sources */,
 				5D8E9EFE2270F58800120C6F /* Event.swift in Sources */,
 				5D8E9EEC2270F47100120C6F /* AppDelegate.swift in Sources */,
