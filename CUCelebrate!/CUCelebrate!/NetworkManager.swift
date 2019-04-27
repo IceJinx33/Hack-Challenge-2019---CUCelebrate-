@@ -12,9 +12,14 @@ import Alamofire
 class NetworkManager {
     let queryEndpoint = "TODO add endpoint to make a query"
     
-    static func getResultsFromQuery(query: Query) {
+    static func getResultsFromQuery(query: Query) -> [Event]{
         let parameters = Query.queryToDict(query)
+        // TODO send this over the network
         
+        var list = [Event(eventName: "Event from DB", eventDate: "Today", eventTime: "10 PM", eventVenue: "Gates Hall", description: "A sample event retrieved from the database.")]
+        list.append(contentsOf: list)
+        list.append(contentsOf: list)
+        return list
         // Step 1: Send query
 //        Alamofire.request(queryEndpoint, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData {
 //            response in

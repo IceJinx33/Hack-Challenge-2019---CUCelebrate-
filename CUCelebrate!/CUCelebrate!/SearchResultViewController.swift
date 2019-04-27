@@ -14,6 +14,9 @@ class SearchResultViewController: UIViewController {
     var searchResultsDelegate: EventCollectionViewDelegate!
     var searchResultsDataSource: EventCollectionViewDataSource!
     
+    let padding: CGFloat = 5
+    let SCREEN_BORDER : CGFloat = 25
+    
     let SEARCH_REUSE_ID = "Search Reuse Identifier"
     
     init(data: [Event]){
@@ -28,17 +31,33 @@ class SearchResultViewController: UIViewController {
         
         title = "Search results"
         
-        searchResults = UICollectionView()
+        let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
+        
+        let searchResultsLayout = UICollectionViewFlowLayout()
+        searchResultsLayout.scrollDirection = .vertical
+        searchResultsLayout.minimumInteritemSpacing = padding
+        searchResultsLayout.minimumLineSpacing = padding*2
+        searchResultsLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
+        
+        searchResults = UICollectionView(frame: .zero, collectionViewLayout: searchResultsLayout)
         searchResults.translatesAutoresizingMaskIntoConstraints = false
         searchResults.delegate = searchResultsDelegate
         searchResults.dataSource = searchResultsDataSource
+        searchResults.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: SEARCH_REUSE_ID)
         view.addSubview(searchResults)
         
         setupConstraints()
     }
     
     func setupConstraints() {
-        
+        NSLayoutConstraint.activate([
+            
+            searchResults.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: SCREEN_BORDER),
+            searchResults.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -1 * SCREEN_BORDER),
+            searchResults.leftAnchor.constraint(equalTo: view.leftAnchor),
+            searchResults.rightAnchor.constraint(equalTo: view.rightAnchor)
+            
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

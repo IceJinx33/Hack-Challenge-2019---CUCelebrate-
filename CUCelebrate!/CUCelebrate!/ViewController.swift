@@ -127,7 +127,7 @@ class ViewController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
-        //searchBar.delegate = self
+        searchBar.delegate = self
         view.addSubview(searchBar)
         
         setupConstraints()
@@ -171,7 +171,12 @@ class ViewController: UIViewController {
             ])
         
     }
-
+    
+    func presentAlert(title: String, desc: String) {
+        let alert = UIAlertController(title: title, message: desc, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ViewController: ChangeMyEventDelegate{
@@ -181,3 +186,20 @@ extension ViewController: ChangeMyEventDelegate{
     
 }
 
+extension ViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            let data = NetworkManager.getResultsFromQuery(query: Query(text: searchText, type: .name))
+            if data.count == 0 {
+                presentAlert(title: "No Results Found", desc: "Sorry, we couldn't find any results. Try changing your search keywords.")
+            } else {
+            self.navigationController?.pushViewController(SearchResultViewController(data: data), animated: true)
+            }
+            
+        } else {
+            
+        }
+        
+        
+    }
+}
