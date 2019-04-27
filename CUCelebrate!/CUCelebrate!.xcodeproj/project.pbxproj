@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18D0A6552273CB5B00D0A079 /* SelectLocationMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0A6542273CB5B00D0A079 /* SelectLocationMapViewController.swift */; };
 		5D0BCD6C22738D5800B7548A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BCD6B22738D5800B7548A /* MapViewController.swift */; };
 		5D8E9EEC2270F47100120C6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EEB2270F47100120C6F /* AppDelegate.swift */; };
 		5D8E9EEE2270F47100120C6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EED2270F47100120C6F /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18D0A6542273CB5B00D0A079 /* SelectLocationMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationMapViewController.swift; sourceTree = "<group>"; };
 		5D0BCD6B22738D5800B7548A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		5D8E9EE82270F47100120C6F /* CUCelebrate!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CUCelebrate!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8E9EEB2270F47100120C6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */,
 				5D8E9F072272744700120C6F /* DisplayEventViewController.swift */,
 				5D0BCD6B22738D5800B7548A /* MapViewController.swift */,
+				18D0A6542273CB5B00D0A079 /* SelectLocationMapViewController.swift */,
 				AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */,
 				AAFABB1F227150160022BDBC /* EventCollectionViewDataSource.swift */,
 			);
@@ -225,6 +228,7 @@
 				AAFABB1C22714E420022BDBC /* EventCollectionViewDelegate.swift in Sources */,
 				5D8E9EEE2270F47100120C6F /* ViewController.swift in Sources */,
 				AAFABB20227150160022BDBC /* EventCollectionViewDataSource.swift in Sources */,
+				18D0A6552273CB5B00D0A079 /* SelectLocationMapViewController.swift in Sources */,
 				5D0BCD6C22738D5800B7548A /* MapViewController.swift in Sources */,
 				5D8E9F082272744700120C6F /* DisplayEventViewController.swift in Sources */,
 				5D8E9F042271015100120C6F /* EventCollectionViewCell.swift in Sources */,
