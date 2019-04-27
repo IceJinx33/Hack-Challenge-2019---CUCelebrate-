@@ -30,6 +30,7 @@ class SearchResultViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Search results"
+        view.backgroundColor = Constants.backgroundColor
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         

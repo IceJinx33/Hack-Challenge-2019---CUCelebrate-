@@ -39,7 +39,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         title = "Events"
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Constants.backgroundColor
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
@@ -53,11 +53,11 @@ class ViewController: UIViewController {
                        eventDate: "Mar 29, 2019",
                        eventTime: "12 PM EDT",
                        eventVenue: "Arts Quad",
-                       description: "Come see the dragon and the phoenix parade around campus!!" ,
+                       description: "Come see the dragon and the phoenix parade around campus!!",
                        image: UIImage(named: "e2")!)
         
-        featuredEvents = [e1,e2]
-        myEvents = []
+        featuredEvents = [e1,e2, Constants.placeholderEvent]
+        myEvents = [Constants.placeholderEvent]
      
         for e in featuredEvents{
             if(e.isMyEvent){
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
         featuredCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        featuredCollectionView.backgroundColor = .lightGray
+        featuredCollectionView.backgroundColor = Constants.backgroundColor
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
         myEventsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myEventsCollectionView.backgroundColor = .lightGray
+        myEventsCollectionView.backgroundColor = Constants.backgroundColor
         myEventsCollectionView.dataSource = myEventsCollectionViewDataSource
         myEventsCollectionView.delegate = myEventsCollectionViewDelegate
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
@@ -108,16 +108,16 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Light", size: Constants.titleFontSize)
-        featuredLabel.textColor = .black
+        featuredLabel.font = Constants.titleFont
+        featuredLabel.textColor = Constants.titleTextColor
         view.addSubview(featuredLabel)
         
         myLabel = UILabel()
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Light", size: Constants.titleFontSize)
-        myLabel.textColor = .black
+        myLabel.font = Constants.titleFont
+        myLabel.textColor = Constants.titleTextColor
         view.addSubview(myLabel)
         
         searchBar = UISearchBar()

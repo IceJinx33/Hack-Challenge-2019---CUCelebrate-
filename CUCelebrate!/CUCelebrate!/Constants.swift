@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+
+// This is a central place to hold (most) constants that may be
+// changed later.
 class Constants {
     // MARK: Placeholders
     static let placeholderImage : UIImage = UIImage(named: "cu_placeholder")!
@@ -22,6 +25,15 @@ class Constants {
     static let titleFontSize : CGFloat = 20
     static let labelHeight : CGFloat = 16
     static let eventTitleHeight : CGFloat = 20
+    
+    // MARK: UI fonts and font names
+    static let titleFont : UIFont = UIFont(name: "Copperplate-Light", size: Constants.titleFontSize)!
+    static let eventTitleFont : UIFont = UIFont(name: "AmericanTypewriter-Bold", size: 20)!
+    static let infoLabelFont : UIFont = UIFont(name: "AmericanTypewriter", size: 16)!
+    
+    // MARK: UI Colors
+    static let backgroundColor : UIColor = UIColor.lightGray
+    static let titleTextColor : UIColor = .black
     
     // MARK: Networking Endpoints
     static let queryEndpoint : String = "TODO add query endpoint"

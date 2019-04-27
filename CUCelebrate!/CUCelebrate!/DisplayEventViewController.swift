@@ -48,7 +48,7 @@ class DisplayEventViewController: UIViewController {
         name.textAlignment = .center
         name.adjustsFontSizeToFitWidth = true
         name.minimumScaleFactor = 10
-        name.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+        name.font = Constants.eventTitleFont
         view.addSubview(name)
         
         date = UILabel()
@@ -56,7 +56,7 @@ class DisplayEventViewController: UIViewController {
         date.text = placeholderEvent.eventDate
         date.adjustsFontSizeToFitWidth = true
         date.minimumScaleFactor = 10
-        date.font = UIFont(name: "AmericanTypewriter", size: 16)
+        date.font = Constants.infoLabelFont
         view.addSubview(date)
         
         time = UILabel()
@@ -64,7 +64,7 @@ class DisplayEventViewController: UIViewController {
         time.text = placeholderEvent.eventTime
         time.adjustsFontSizeToFitWidth = true
         time.minimumScaleFactor = 10
-        time.font = UIFont(name: "AmericanTypewriter", size: 16)
+        time.font = Constants.infoLabelFont
         view.addSubview(time)
         
         venue = UILabel()
@@ -72,20 +72,20 @@ class DisplayEventViewController: UIViewController {
         venue.text = placeholderEvent.eventVenue
         venue.adjustsFontSizeToFitWidth = true
         venue.minimumScaleFactor = 10
-        venue.font = UIFont(name: "AmericanTypewriter", size: 16)
+        venue.font = Constants.infoLabelFont
         view.addSubview(venue)
         
         checkLabel = UILabel()
         checkLabel.translatesAutoresizingMaskIntoConstraints = false
         checkLabel.text = "Add to My Events"
-        checkLabel.font = UIFont(name: "AmericanTypewriter", size: 16)
+        checkLabel.font = Constants.infoLabelFont
         view.addSubview(checkLabel)
         
         descText = UITextView()
         descText.translatesAutoresizingMaskIntoConstraints = false
         descText.text = placeholderEvent.description
         descText.backgroundColor = .clear
-        descText.font = UIFont(name: "AmericanTypewriter", size: 16)
+        descText.font = Constants.infoLabelFont
         descText.isEditable = false
         view.addSubview(descText)
         
