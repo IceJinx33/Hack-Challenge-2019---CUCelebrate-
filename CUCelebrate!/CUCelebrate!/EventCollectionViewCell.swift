@@ -15,9 +15,6 @@ class EventCollectionViewCell: UICollectionViewCell {
     var date: UILabel!
     var placeTime: UILabel!
     
-    let padding: CGFloat = 5
-    let labelHeight: CGFloat = 16
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -69,24 +66,24 @@ class EventCollectionViewCell: UICollectionViewCell {
             ])
         
         NSLayoutConstraint.activate([
-            date.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 2*padding),
-            date.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 2*padding),
-            date.heightAnchor.constraint(equalToConstant: 2*labelHeight),
+            date.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 2*Constants.padding),
+            date.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 2*Constants.padding),
+            date.heightAnchor.constraint(equalToConstant: 2*Constants.labelHeight),
             date.widthAnchor.constraint(equalToConstant: 100)
             ])
         
         NSLayoutConstraint.activate([
-            name.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 4*padding),
-            name.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 2*padding),
-            name.heightAnchor.constraint(equalToConstant: labelHeight),
-            name.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*padding)
+            name.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 4*Constants.padding),
+            name.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 2*Constants.padding),
+            name.heightAnchor.constraint(equalToConstant: Constants.labelHeight),
+            name.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*Constants.padding)
             ])
         
         NSLayoutConstraint.activate([
-            placeTime.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 4*padding),
-            placeTime.topAnchor.constraint(equalTo: name.bottomAnchor, constant: padding),
-            placeTime.heightAnchor.constraint(equalToConstant: labelHeight),
-            placeTime.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*padding)
+            placeTime.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 4*Constants.padding),
+            placeTime.topAnchor.constraint(equalTo: name.bottomAnchor, constant: Constants.padding),
+            placeTime.heightAnchor.constraint(equalToConstant: Constants.labelHeight),
+            placeTime.widthAnchor.constraint(equalToConstant: contentView.frame.width - 4*Constants.padding)
             ])
         
     }

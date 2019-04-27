@@ -7,8 +7,7 @@
 //
 
 
-// WARNING: DEPRECATED
-//          Due to an unnotified plan, this class will never be used.
+// IS NOT RUNNABLE: This class may be used later when networking works.
 
 import UIKit
 

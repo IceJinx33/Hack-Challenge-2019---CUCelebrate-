@@ -22,8 +22,6 @@ class DisplayEventViewController: UIViewController {
     var mapButton: UIButton!
     var checkButton: UIButton!
     
-    let labelHeight = 20
-    
     weak var delegate: ChangeMyEventDelegate?
     
     var placeholderEvent: Event!
@@ -150,63 +148,63 @@ class DisplayEventViewController: UIViewController {
             name.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 20),
             name.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             name.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            name.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            name.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             timeIcon.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 25),
             timeIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            timeIcon.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            timeIcon.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            timeIcon.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            timeIcon.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             date.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 20),
             date.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 20),
             date.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            date.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            date.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             time.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 10),
             time.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 20),
             time.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            time.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            time.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             mapIcon.topAnchor.constraint(equalTo: time.bottomAnchor, constant: 10),
             mapIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            mapIcon.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            mapIcon.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            mapIcon.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            mapIcon.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             venue.topAnchor.constraint(equalTo: time.bottomAnchor, constant: 20),
             venue.leadingAnchor.constraint(equalTo: mapIcon.trailingAnchor, constant: 20),
             venue.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            venue.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            venue.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             mapButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             mapButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             mapButton.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width*2/3.0),
-            mapButton.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            mapButton.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             checkButton.bottomAnchor.constraint(equalTo: mapButton.topAnchor, constant: -20),
             checkButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            checkButton.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            checkButton.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            checkButton.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            checkButton.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             checkLabel.bottomAnchor.constraint(equalTo: mapButton.topAnchor, constant: -30),
             checkLabel.leadingAnchor.constraint(equalTo: checkButton.trailingAnchor, constant: 20),
             checkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            checkLabel.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            checkLabel.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
@@ -221,16 +219,7 @@ class DisplayEventViewController: UIViewController {
         checkButton.isSelected = !checkButton.isSelected
         placeholderEvent.isMyEvent = !placeholderEvent.isMyEvent
         delegate?.MyEventChanged(to: placeholderEvent)
+        NetworkManager.updateEvent(user: "User", event: placeholderEvent)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

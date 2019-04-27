@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     let FEATURED_REUSE_ID = "featuredEventsCellReuseIdentifier"
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
-    let padding: CGFloat = 5
     let myHeight = 200
 
     weak var delegate: ChangeMyEventDelegate?
@@ -61,7 +60,7 @@ class ViewController: UIViewController {
         myEvents = []
      
         for e in featuredEvents{
-            if(e.isMyEvent == true){
+            if(e.isMyEvent){
                 myEvents.append(e)
             }
         }
@@ -72,8 +71,8 @@ class ViewController: UIViewController {
         // featured events collection layout
         let featuredLayout = UICollectionViewFlowLayout()
         featuredLayout.scrollDirection = .vertical
-        featuredLayout.minimumInteritemSpacing = padding
-        featuredLayout.minimumLineSpacing = padding*2
+        featuredLayout.minimumInteritemSpacing = Constants.padding
+        featuredLayout.minimumLineSpacing = Constants.padding*2
         featuredLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection view
@@ -92,8 +91,8 @@ class ViewController: UIViewController {
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
-        myLayout.minimumInteritemSpacing = padding
-        myLayout.minimumLineSpacing = padding
+        myLayout.minimumInteritemSpacing = Constants.padding
+        myLayout.minimumLineSpacing = Constants.padding
         myLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection layout
@@ -109,7 +108,7 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
+        featuredLabel.font = UIFont(name: "Copperplate-Light", size: Constants.titleFontSize)
         featuredLabel.textColor = .black
         view.addSubview(featuredLabel)
         
@@ -117,7 +116,7 @@ class ViewController: UIViewController {
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
+        myLabel.font = UIFont(name: "Copperplate-Light", size: Constants.titleFontSize)
         myLabel.textColor = .black
         view.addSubview(myLabel)
         
@@ -197,7 +196,7 @@ extension ViewController: UISearchBarDelegate {
             }
             
         } else {
-            
+            presentAlert(title: "No Search Terms Entered", desc: "Please enter the name of the event you are searching for.")
         }
         
         
