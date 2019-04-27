@@ -32,7 +32,6 @@ class ViewController: UIViewController {
     let FEATURED_REUSE_ID = "featuredEventsCellReuseIdentifier"
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
-    let padding: CGFloat = 5
     let myHeight = 200
 
     weak var delegate: ChangeMyEventDelegate?
@@ -41,7 +40,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         title = "Events"
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Constants.backgroundColor
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
@@ -53,12 +52,7 @@ class ViewController: UIViewController {
         
         featuredEvents = [e1,e2,e3,e4,e5]
         myEvents = []
-        
-        for event in featuredEvents{
-            if(event.isMyEvent == true){
-                myEvents.append(event)
-            }
-        }
+
   
         featuredCollectionViewDelgate = EventCollectionViewDelegate(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID, view: self)
         featuredCollectionViewDataSource = EventCollectionViewDataSource(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID)
@@ -66,14 +60,14 @@ class ViewController: UIViewController {
         // featured events collection layout
         let featuredLayout = UICollectionViewFlowLayout()
         featuredLayout.scrollDirection = .vertical
-        featuredLayout.minimumInteritemSpacing = padding
-        featuredLayout.minimumLineSpacing = padding*2
+        featuredLayout.minimumInteritemSpacing = Constants.padding
+        featuredLayout.minimumLineSpacing = Constants.padding*2
         featuredLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
         featuredCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        featuredCollectionView.backgroundColor = .lightGray
+        featuredCollectionView.backgroundColor = Constants.backgroundColor
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
@@ -86,14 +80,14 @@ class ViewController: UIViewController {
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
-        myLayout.minimumInteritemSpacing = padding
-        myLayout.minimumLineSpacing = padding
+        myLayout.minimumInteritemSpacing = Constants.padding
+        myLayout.minimumLineSpacing = Constants.padding
         myLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
         myEventsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myEventsCollectionView.backgroundColor = .lightGray
+        myEventsCollectionView.backgroundColor = Constants.backgroundColor
         myEventsCollectionView.dataSource = myEventsCollectionViewDataSource
         myEventsCollectionView.delegate = myEventsCollectionViewDelegate
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
@@ -103,16 +97,16 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        featuredLabel.textColor = .black
+        featuredLabel.font = Constants.titleFont
+        featuredLabel.textColor = Constants.titleTextColor
         view.addSubview(featuredLabel)
         
         myLabel = UILabel()
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        myLabel.textColor = .black
+        myLabel.font = Constants.titleFont
+        myLabel.textColor = Constants.titleTextColor
         view.addSubview(myLabel)
         
         //searchBar not yet implemented
@@ -122,7 +116,7 @@ class ViewController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
-        //searchBar.delegate = self
+        searchBar.delegate = self
         view.addSubview(searchBar)
         
         setupConstraints()
@@ -166,7 +160,12 @@ class ViewController: UIViewController {
             ])
         
     }
-
+    
+    func presentAlert(title: String, desc: String) {
+        let alert = UIAlertController(title: title, message: desc, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ViewController: ChangeMyEventDelegate{
@@ -185,3 +184,20 @@ extension ViewController: ChangeMyEventDelegate{
     
 }
 
+extension ViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            let data = NetworkManager.getResultsFromQuery(query: Query(text: searchText, type: .name))
+            if data.count == 0 {
+                presentAlert(title: "No Results Found", desc: "Sorry, we couldn't find any results. Try changing your search keywords.")
+            } else {
+            self.navigationController?.pushViewController(SearchResultViewController(data: data), animated: true)
+            }
+            
+        } else {
+            presentAlert(title: "No Search Terms Entered", desc: "Please enter the name of the event you are searching for.")
+        }
+        
+        
+    }
+}
