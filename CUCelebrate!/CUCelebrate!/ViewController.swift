@@ -187,13 +187,12 @@ extension ViewController: ChangeMyEventDelegate{
 extension ViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text {
-            let data = NetworkManager.getResultsFromQuery(query: Query(text: searchText, type: .name))
-            if data.count == 0 {
+            let results = NetworkManager.getAllEvents().filter({$0.eventName.contains(searchText)})
+            if results.count == 0 {
                 presentAlert(title: "No Results Found", desc: "Sorry, we couldn't find any results. Try changing your search keywords.")
             } else {
-            self.navigationController?.pushViewController(SearchResultViewController(data: data), animated: true)
+                self.navigationController?.pushViewController(SearchResultViewController(data: results), animated: true)
             }
-            
         } else {
             presentAlert(title: "No Search Terms Entered", desc: "Please enter the name of the event you are searching for.")
         }

@@ -39,5 +39,5 @@ class Constants {
     // MARK: Networking Endpoints
     static let queryEndpoint : String = "TODO add query endpoint"
     static let userEventsEndpoint : String = "TODO add user event get/post endpoint"
-    
+    static let getAllEventsEndpoint : String = "TODO add GET all events endpoint"
 }

@@ -32,7 +32,9 @@ struct EventResponse1 : Codable {
     var id: Int
     var title: String
     // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
-    var date_posted: Int
+    var month: Int
+    var day: Int
+    var year: Int
     var time: Int // first 4 digits for start, last 4 for end.
     var descr: String
     var location: String
@@ -79,6 +81,40 @@ class JSONConverter {
         return Event(eventName: event.title, eventDate: dummyEventDate, eventTime: dummyEventTime, eventVenue: event.location, description: event.descr)
     }
     
+    static func makeEventFromGetAll(_ event: EventResponse1) -> Event {
+        let dummyEventDate = "Date"
+        let dummyEventTime = "Time"
+        
+        return Event(eventName: event.title,
+                     eventDate: JSONConverter.eventIntToEventString(month: event.month,
+                                                                    day: event.day,
+                                                                    year: event.year),
+                     eventTime: dummyEventTime,
+                     eventVenue: event.location,
+                     description: event.descr)
+    }
+    
+    static func eventIntToEventString(month: Int, day: Int, year: Int) -> String {
+        var monthStr: String = ""
+        switch month {
+        case 1: monthStr = "Jan"
+        case 2: monthStr = "Feb"
+        case 3: monthStr = "Mar"
+        case 4: monthStr = "Apr"
+        case 5: monthStr = "May"
+        case 6: monthStr = "Jun"
+        case 7: monthStr = "Jul"
+        case 8: monthStr = "Aug"
+        case 9: monthStr = "Sep"
+        case 10: monthStr = "Oct"
+        case 11: monthStr = "Nov"
+        case 12: monthStr = "Dec"
+        default: monthStr = "NIL"
+        }
+        
+        return monthStr + String(day) + ", " + String(year)
+    }
+    
     // dateStringToInt( str: String ) -> Int
     // Returns the int representation of a time range.
     // i.e. "9:00 AM - 5:00 PM" -> 9001700.
@@ -96,7 +132,6 @@ class JSONConverter {
         let first = simplifyTimeString(time: String(strs[0] + strs[1]), ampm: String(strs[2]))
         let second = simplifyTimeString(time: String(strs[3] + strs[4]), ampm: String(strs[5]))
         return Int(first + second)!
-        
     }
     
     static func timeIntToString(_ int: Int) -> String {

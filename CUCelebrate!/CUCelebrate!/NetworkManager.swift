@@ -10,31 +10,48 @@ import Foundation
 import Alamofire
 
 class NetworkManager {
-
-    static func getResultsFromQuery(query: Query) -> [Event]{
-        
-        // 1: Gather request body
-        let parameters = Query.queryToDict(query)
-        
-        // 2: TODO send the request body over the network
-        Alamofire.request(Constants.queryEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: [:]).validate().responseData { (response) in
-            // TODO do something with the response here
-            
+    
+    static let NETWORKS_ON : Bool = false
+    
+    static func getAllEvents() -> [Event] {
+        if NETWORKS_ON {
+            var result : [Event] = []
+            Alamofire.request(Constants.getAllEventsEndpoint, method: .get).validate().responseData { (response) in
+                
+                switch response.result {
+                    
+                case .success(let data):
+                    
+                    let jsonDecoder = JSONDecoder()
+                    if let eventResponse = try? jsonDecoder.decode(EventResponseEnvelope.self, from: data) {
+                        if eventResponse.success {
+                            result = eventResponse.data.map({return JSONConverter.makeEventFromGetAll($0)})
+                        } else {
+                            result = []
+                        }
+                    } else {
+                        print("Invalid response data")
+                        result = []
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    result = []
+                }
+                
+            }
+            return result
         }
-        // 3: TODO interpret the response into a Swift-readable format
-        
         return generateDummyData()
+        
     }
     
     static func updateEvent(user: String, event: Event) {
         // 1. Gather request body
         let parameters = EventResponse.makeEventResponse(event)
         
-        // 2: TODO send the request body over the network
-//        Alamofire.request(Constants.userEventsEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: [:]).validate().responseData { (response) in
-//            // TODO do something with the response here
-//
-//        }
+        // send over network
+        
         
     }
     
