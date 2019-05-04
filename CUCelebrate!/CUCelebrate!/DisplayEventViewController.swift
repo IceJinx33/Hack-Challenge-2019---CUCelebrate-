@@ -37,17 +37,29 @@ class DisplayEventViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-
+    
+    let darkPink = UIColor(red: 0.9176, green: 0.2667, blue: 0.3647, alpha: 1.0)
+    let coral = UIColor(red: 0.8275, green: 0.2314, blue: 0.2392, alpha: 1.0)
+    let pink = UIColor(red: 1, green: 0.3882, blue: 0.4902, alpha: 1.0)
+    let lightPink = UIColor(red: 1, green: 0.4863, blue: 0.6667, alpha: 1.0)
+    let gold = UIColor(red: 0.9, green: 0.5, blue: 0, alpha: 1.0)
+    let orange = UIColor(red: 1, green: 0.4784, blue: 0.2863, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
          // Do any additional setup after loading the view.
-        view.backgroundColor = .lightGray
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.red.cgColor, darkPink.cgColor, coral.cgColor, pink.cgColor, orange.cgColor, orange.cgColor, pink.cgColor, darkPink.cgColor, coral.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        gradientLayer.frame = view.bounds
+        view.layer.addSublayer(gradientLayer)
         
         name = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
         name.text = placeholderEvent.eventName
+        name.textColor = .black
         name.textAlignment = .center
         name.adjustsFontSizeToFitWidth = true
         name.minimumScaleFactor = 10
@@ -57,50 +69,56 @@ class DisplayEventViewController: UIViewController {
         date = UILabel()
         date.translatesAutoresizingMaskIntoConstraints = false
         date.text = placeholderEvent.eventDate
+        date.textColor = .white
         date.adjustsFontSizeToFitWidth = true
         date.minimumScaleFactor = 10
-        date.font = UIFont(name: "AmericanTypewriter", size: 16)
+        date.font = UIFont(name: "Optima-Bold", size: 16)
         view.addSubview(date)
         
         time = UILabel()
         time.translatesAutoresizingMaskIntoConstraints = false
         time.text = placeholderEvent.eventTime
+        time.textColor = .white
         time.adjustsFontSizeToFitWidth = true
         time.minimumScaleFactor = 10
-        time.font = UIFont(name: "AmericanTypewriter", size: 16)
+        time.font = UIFont(name: "Optima-Bold", size: 16)
         view.addSubview(time)
         
         venue = UILabel()
         venue.translatesAutoresizingMaskIntoConstraints = false
         venue.text = placeholderEvent.eventVenue
+        venue.textColor = .white
         venue.adjustsFontSizeToFitWidth = true
         venue.minimumScaleFactor = 10
-        venue.font = UIFont(name: "AmericanTypewriter", size: 16)
+        venue.font = UIFont(name: "Optima-Bold", size: 16)
         view.addSubview(venue)
         
         checkLabel = UILabel()
         checkLabel.translatesAutoresizingMaskIntoConstraints = false
         checkLabel.text = "Add to My Events"
-        checkLabel.font = UIFont(name: "AmericanTypewriter", size: 16)
+        checkLabel.textColor = .black
+        checkLabel.font = UIFont(name: "AmericanTypewriter-Bold", size: 16)
         view.addSubview(checkLabel)
         
         descText = UITextView()
         descText.translatesAutoresizingMaskIntoConstraints = false
         descText.text = placeholderEvent.description
+        descText.textColor = .white
         descText.backgroundColor = .clear
-        descText.font = UIFont(name: "AmericanTypewriter", size: 16)
+        descText.font = UIFont(name: "Optima-Bold", size: 16)
         descText.isEditable = false
         view.addSubview(descText)
         
         image = UIImageView(image: placeholderEvent.image)
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.isHidden = false
         image.layer.cornerRadius = 10
-        image.backgroundColor = .white
-        image.layer.borderWidth = 1.0
-        image.layer.borderColor = UIColor.black.cgColor
-        image.layer.masksToBounds = false
+        image.backgroundColor = .clear
+        image.layer.borderWidth = 2.0
+        image.layer.borderColor = UIColor.clear.cgColor
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 10
         view.addSubview(image)
         
         timeIcon = UIImageView(image: UIImage(named: "clock"))
@@ -118,7 +136,7 @@ class DisplayEventViewController: UIViewController {
         mapButton = UIButton()
         mapButton.translatesAutoresizingMaskIntoConstraints = false
         mapButton.setTitle("Find Location on Map", for: .normal)
-        mapButton.setTitleColor(.blue, for: .normal)
+        mapButton.setTitleColor(.black, for: .normal)
         mapButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
         view.addSubview(mapButton)
         

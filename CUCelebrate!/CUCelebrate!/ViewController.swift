@@ -41,7 +41,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         title = "Events"
-        view.backgroundColor = .lightGray
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "back1")
+        backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
+        self.view.insertSubview(backgroundImage, at: 0)
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
@@ -73,7 +77,7 @@ class ViewController: UIViewController {
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
         featuredCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        featuredCollectionView.backgroundColor = .lightGray
+        featuredCollectionView.backgroundColor = .clear
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
@@ -93,7 +97,7 @@ class ViewController: UIViewController {
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
         myEventsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myEventsCollectionView.backgroundColor = .lightGray
+        myEventsCollectionView.backgroundColor = .clear
         myEventsCollectionView.dataSource = myEventsCollectionViewDataSource
         myEventsCollectionView.delegate = myEventsCollectionViewDelegate
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
@@ -103,16 +107,16 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        featuredLabel.textColor = .black
+        featuredLabel.font = UIFont(name: "Copperplate-Bold", size: 24)
+        featuredLabel.textColor = .white
         view.addSubview(featuredLabel)
         
         myLabel = UILabel()
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        myLabel.textColor = .black
+        myLabel.font = UIFont(name: "Copperplate-Bold", size: 24)
+        myLabel.textColor = .white
         view.addSubview(myLabel)
         
         //searchBar not yet implemented
