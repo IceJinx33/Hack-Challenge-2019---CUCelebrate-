@@ -10,28 +10,59 @@ import Foundation
 import Alamofire
 
 class NetworkManager {
-    let queryEndpoint = "TODO add endpoint to make a query"
     
-    static func getResultsFromQuery(query: Query) {
-        let parameters = Query.queryToDict(query)
+    static let NETWORKS_ON : Bool = false
+    
+    static func getAllEvents() -> [Event] {
+        if NETWORKS_ON {
+            var result : [Event] = []
+            Alamofire.request(Constants.getAllEventsEndpoint, method: .get).validate().responseData { (response) in
+                
+                switch response.result {
+                    
+                case .success(let data):
+                    
+                    let jsonDecoder = JSONDecoder()
+                    if let eventResponse = try? jsonDecoder.decode(EventResponseEnvelope.self, from: data) {
+                        if eventResponse.success {
+                            result = eventResponse.data.map({return JSONConverter.makeEventFromGetAll($0)})
+                        } else {
+                            result = []
+                        }
+                    } else {
+                        print("Invalid response data")
+                        result = []
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    result = []
+                }
+                
+            }
+            return result
+        }
+        return generateDummyData()
         
-        // Step 1: Send query
-//        Alamofire.request(queryEndpoint, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData {
-//            response in
-//
-//            switch response.result {
-//
-//            case .success(let data):
-//                let jsonDecoder = JSONDecoder()
-//                if let response = try? jsonDecoder.decode(User.self, from: data) {
-//                    print("Received user with token \(response.token)")
-//                }
-//
-//
-//            case .failure(let error): print(error.localizedDescription)
-//            }
-//        }
+    }
+    
+    static func updateEvent(user: String, event: Event) {
+        // 1. Gather request body
+        let parameters = EventResponse.makeEventResponse(event)
         
-        // Step 2: Return the results in a Swift-readable format
+        // send over network
+        
+        
+    }
+    
+    static func generateDummyData() -> [Event] {
+        var list : [Event] = []
+        for i in 1..<4 {
+            list.append(Event(eventName: "Event \(i) from DB",
+                eventDate: "May \(i), 2019", eventTime: "\(6+i) PM",
+                eventVenue: "Gates Hall",
+                description: "Event number \(i) of an exciting list of events you searched for. Actual search TBA, as networking isn't ready yet."))
+        }
+        return list
     }
 }

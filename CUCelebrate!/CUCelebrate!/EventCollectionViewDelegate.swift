@@ -34,6 +34,7 @@ class EventCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = events[indexPath.row]
         let navViewController = DisplayEventViewController(placeholderEvent: event)
+        navViewController.delegate = view as? ChangeMyEventDelegate
         view.navigationController?.pushViewController(navViewController, animated: true)
     }
     

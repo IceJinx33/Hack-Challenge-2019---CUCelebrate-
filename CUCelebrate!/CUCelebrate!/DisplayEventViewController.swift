@@ -21,8 +21,7 @@ class DisplayEventViewController: UIViewController {
     var mapIcon: UIImageView!
     var mapButton: UIButton!
     var checkButton: UIButton!
-    
-    let labelHeight = 20
+    var barButton: UIBarButtonItem!
     
     weak var delegate: ChangeMyEventDelegate?
     
@@ -50,7 +49,7 @@ class DisplayEventViewController: UIViewController {
         name.textAlignment = .center
         name.adjustsFontSizeToFitWidth = true
         name.minimumScaleFactor = 10
-        name.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+        name.font = Constants.eventTitleFont
         view.addSubview(name)
         
         date = UILabel()
@@ -58,7 +57,7 @@ class DisplayEventViewController: UIViewController {
         date.text = placeholderEvent.eventDate
         date.adjustsFontSizeToFitWidth = true
         date.minimumScaleFactor = 10
-        date.font = UIFont(name: "AmericanTypewriter", size: 16)
+        date.font = Constants.infoLabelFont
         view.addSubview(date)
         
         time = UILabel()
@@ -66,7 +65,7 @@ class DisplayEventViewController: UIViewController {
         time.text = placeholderEvent.eventTime
         time.adjustsFontSizeToFitWidth = true
         time.minimumScaleFactor = 10
-        time.font = UIFont(name: "AmericanTypewriter", size: 16)
+        time.font = Constants.infoLabelFont
         view.addSubview(time)
         
         venue = UILabel()
@@ -74,20 +73,20 @@ class DisplayEventViewController: UIViewController {
         venue.text = placeholderEvent.eventVenue
         venue.adjustsFontSizeToFitWidth = true
         venue.minimumScaleFactor = 10
-        venue.font = UIFont(name: "AmericanTypewriter", size: 16)
+        venue.font = Constants.infoLabelFont
         view.addSubview(venue)
         
         checkLabel = UILabel()
         checkLabel.translatesAutoresizingMaskIntoConstraints = false
         checkLabel.text = "Add to My Events"
-        checkLabel.font = UIFont(name: "AmericanTypewriter", size: 16)
+        checkLabel.font = Constants.infoLabelFont
         view.addSubview(checkLabel)
         
         descText = UITextView()
         descText.translatesAutoresizingMaskIntoConstraints = false
         descText.text = placeholderEvent.description
         descText.backgroundColor = .clear
-        descText.font = UIFont(name: "AmericanTypewriter", size: 16)
+        descText.font = Constants.infoLabelFont
         descText.isEditable = false
         view.addSubview(descText)
         
@@ -118,7 +117,7 @@ class DisplayEventViewController: UIViewController {
         mapButton.translatesAutoresizingMaskIntoConstraints = false
         mapButton.setTitle("Find Location on Map", for: .normal)
         mapButton.setTitleColor(.blue, for: .normal)
-        //mapButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
+        mapButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
         view.addSubview(mapButton)
         
         checkButton = UIButton()
@@ -133,6 +132,10 @@ class DisplayEventViewController: UIViewController {
         checkButton.setBackgroundImage(UIImage(named: "check"), for: .selected)
         checkButton.addTarget(self, action: #selector(checkBox), for: .touchUpInside)
         view.addSubview(checkButton)
+        
+        barButton = UIBarButtonItem(title: "Save", style: UIBarButtonItem.Style.plain, target: self, action: #selector(saveWork))
+        barButton.title = "Save"
+        navigationItem.setRightBarButton(barButton, animated: true)
         
         setupConstraints()
     }
@@ -150,63 +153,63 @@ class DisplayEventViewController: UIViewController {
             name.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 20),
             name.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             name.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            name.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            name.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             timeIcon.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 25),
             timeIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            timeIcon.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            timeIcon.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            timeIcon.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            timeIcon.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             date.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 20),
             date.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 20),
             date.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            date.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            date.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             time.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 10),
             time.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 20),
             time.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            time.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            time.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             mapIcon.topAnchor.constraint(equalTo: time.bottomAnchor, constant: 10),
             mapIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            mapIcon.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            mapIcon.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            mapIcon.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            mapIcon.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             venue.topAnchor.constraint(equalTo: time.bottomAnchor, constant: 20),
             venue.leadingAnchor.constraint(equalTo: mapIcon.trailingAnchor, constant: 20),
             venue.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            venue.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            venue.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             mapButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             mapButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             mapButton.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width*2/3.0),
-            mapButton.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            mapButton.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             checkButton.bottomAnchor.constraint(equalTo: mapButton.topAnchor, constant: -20),
             checkButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            checkButton.widthAnchor.constraint(equalToConstant: CGFloat(2*labelHeight)),
-            checkButton.heightAnchor.constraint(equalToConstant: CGFloat(2*labelHeight))
+            checkButton.widthAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight),
+            checkButton.heightAnchor.constraint(equalToConstant: 2 * Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
             checkLabel.bottomAnchor.constraint(equalTo: mapButton.topAnchor, constant: -30),
             checkLabel.leadingAnchor.constraint(equalTo: checkButton.trailingAnchor, constant: 20),
             checkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            checkLabel.heightAnchor.constraint(equalToConstant: CGFloat(labelHeight))
+            checkLabel.heightAnchor.constraint(equalToConstant: Constants.eventTitleHeight)
             ])
         
         NSLayoutConstraint.activate([
@@ -220,17 +223,17 @@ class DisplayEventViewController: UIViewController {
     @objc func checkBox(){
         checkButton.isSelected = !checkButton.isSelected
         placeholderEvent.isMyEvent = !placeholderEvent.isMyEvent
-        delegate?.MyEventChanged(to: placeholderEvent)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func saveWork(){
+        delegate?.MyEventChanged(to: placeholderEvent, newIsMyEventChanged: placeholderEvent.isMyEvent)
+        navigationController?.popViewController(animated: true)
+        NetworkManager.updateEvent(user: "User", event: placeholderEvent)
     }
-    */
+    
+    @objc func findLocation(){
+        let navViewController = MapViewController()
+        navigationController?.pushViewController(navViewController, animated: true)
+    }
 
 }

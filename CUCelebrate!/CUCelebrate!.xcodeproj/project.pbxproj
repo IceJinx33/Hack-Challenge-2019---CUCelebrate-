@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0BCD6C22738D5800B7548A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BCD6B22738D5800B7548A /* MapViewController.swift */; };
 		5D8E9EEC2270F47100120C6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EEB2270F47100120C6F /* AppDelegate.swift */; };
 		5D8E9EEE2270F47100120C6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EED2270F47100120C6F /* ViewController.swift */; };
 		5D8E9EFE2270F58800120C6F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E9EFD2270F58800120C6F /* Event.swift */; };
@@ -17,12 +18,15 @@
 		AA43D50C2272A590004A6F3E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA43D50B2272A590004A6F3E /* Query.swift */; };
 		AA43D50E2272AA46004A6F3E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA43D50D2272AA46004A6F3E /* SearchViewController.swift */; };
 		AA43D5102272AB30004A6F3E /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA43D50F2272AB30004A6F3E /* SearchResultViewController.swift */; };
+		AA7524C92273D9DB00D48100 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7524C82273D9DB00D48100 /* Constants.swift */; };
+		AA7524CB2273DF4B00D48100 /* EventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7524CA2273DF4B00D48100 /* EventResponse.swift */; };
 		AAFABB1C22714E420022BDBC /* EventCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */; };
 		AAFABB1E22714E5D0022BDBC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */; };
 		AAFABB20227150160022BDBC /* EventCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFABB1F227150160022BDBC /* EventCollectionViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0BCD6B22738D5800B7548A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		5D8E9EE82270F47100120C6F /* CUCelebrate!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CUCelebrate!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8E9EEB2270F47100120C6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D8E9EED2270F47100120C6F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +41,8 @@
 		AA43D50B2272A590004A6F3E /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		AA43D50D2272AA46004A6F3E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		AA43D50F2272AB30004A6F3E /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		AA7524C82273D9DB00D48100 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AA7524CA2273DF4B00D48100 /* EventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventResponse.swift; sourceTree = "<group>"; };
 		AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AAFABB1F227150160022BDBC /* EventCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -91,11 +97,14 @@
 				5D8E9EF72270F47500120C6F /* Info.plist */,
 				AAFABB1B22714E420022BDBC /* EventCollectionViewDelegate.swift */,
 				5D8E9F072272744700120C6F /* DisplayEventViewController.swift */,
+				5D0BCD6B22738D5800B7548A /* MapViewController.swift */,
 				AAFABB1D22714E5D0022BDBC /* NetworkManager.swift */,
 				AAFABB1F227150160022BDBC /* EventCollectionViewDataSource.swift */,
 				AA43D50B2272A590004A6F3E /* Query.swift */,
 				AA43D50D2272AA46004A6F3E /* SearchViewController.swift */,
 				AA43D50F2272AB30004A6F3E /* SearchResultViewController.swift */,
+				AA7524C82273D9DB00D48100 /* Constants.swift */,
+				AA7524CA2273DF4B00D48100 /* EventResponse.swift */,
 			);
 			path = "CUCelebrate!";
 			sourceTree = "<group>";
@@ -228,16 +237,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAFABB1E22714E5D0022BDBC /* NetworkManager.swift in Sources */,
+				AA7524CB2273DF4B00D48100 /* EventResponse.swift in Sources */,
 				AAFABB1C22714E420022BDBC /* EventCollectionViewDelegate.swift in Sources */,
 				AA43D5102272AB30004A6F3E /* SearchResultViewController.swift in Sources */,
 				5D8E9EEE2270F47100120C6F /* ViewController.swift in Sources */,
 				AA43D50E2272AA46004A6F3E /* SearchViewController.swift in Sources */,
 				AAFABB20227150160022BDBC /* EventCollectionViewDataSource.swift in Sources */,
+				5D0BCD6C22738D5800B7548A /* MapViewController.swift in Sources */,
 				AA43D50C2272A590004A6F3E /* Query.swift in Sources */,
 				5D8E9F082272744700120C6F /* DisplayEventViewController.swift in Sources */,
 				5D8E9F042271015100120C6F /* EventCollectionViewCell.swift in Sources */,
 				5D8E9EFE2270F58800120C6F /* Event.swift in Sources */,
 				5D8E9EEC2270F47100120C6F /* AppDelegate.swift in Sources */,
+				AA7524C92273D9DB00D48100 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

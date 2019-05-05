@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeMyEventDelegate: class {
-    func MyEventChanged(to e: Event)
+    func MyEventChanged(to e: Event, newIsMyEventChanged: Bool)
 }
 
 class ViewController: UIViewController {
@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     
     var featuredEvents: [Event]!
     var myEvents: [Event]!
+    var tempMyEvents: [Event]!
     var featuredLabel: UILabel!
     var myLabel: UILabel!
     var searchBar: UISearchBar!
@@ -31,7 +32,6 @@ class ViewController: UIViewController {
     let FEATURED_REUSE_ID = "featuredEventsCellReuseIdentifier"
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
     
-    let padding: CGFloat = 5
     let myHeight = 200
 
     weak var delegate: ChangeMyEventDelegate?
@@ -40,46 +40,34 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         title = "Events"
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Constants.backgroundColor
         
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
         
-        let e1 = Event(eventName: "CU Downtown",
-                       eventDate: "Sep 1, 2018",
-                       eventTime: "1 PM EDT",
-                       eventVenue: "Downtown Ithaca NY",
-                       description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!",
-                       image: UIImage(named: "e1")!)
-        let e2 = Event(eventName: "Dragon Day 2019",
-                       eventDate: "Mar 29, 2019",
-                       eventTime: "12 PM EDT",
-                       eventVenue: "Arts Quad",
-                       description: "Come see the dragon and the phoenix parade around campus!!" ,
-                       image: UIImage(named: "e2")!)
+        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
+        let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
+        let e3 = Event(eventName: "CIS Formal: Party at Gatsby's", eventDate: "Apr 27, 2019", eventTime: "9 PM EDT", eventVenue: "The Statler Hotel", description: "Join ACSU, WICC and URMC to celebrate the end of the semester with a Gatsby themed formal at the Statler Hotel! It will be a fun filled night with friends, food, dancing and more!!" + "\n" + "Suggested Attire: Semi-Formal" + "\n" + "Tickets are $15 each." , image: UIImage(named: "e3")!)
+        let e4 = Event(eventName: "Cornell Chamber Orchestra Concert", eventDate: "Apr 26, 2019", eventTime: "7 PM EDT", eventVenue: "Barnes Hall", description: "We will by playing music by Drdla, Bach, Grieg, Holst as well as compositions by students. This event is free and open to the public! We look forward to seeing you there!" , image: UIImage(named: "e4")!)
+        let e5 = Event(eventName: "Mock Shaadi 2019", eventDate: "Apr 26, 2019", eventTime: "8 PM EDT", eventVenue: "Biotech G10", description: "Hosted by Cornell University's South Asian Council." + "\n" + "It’s shaadi season! SAC’s Mock Shaadi is an annual interfaith and intercultural mock wedding celebration that showcases and celebrates that richness and diversity of South Asian cultural and religious wedding traditions. Come through for a night filled with delicious food, music, and dancing!" , image: UIImage(named: "e5")!)
         
-        featuredEvents = [e1,e2]
+        featuredEvents = [e1,e2,e3,e4,e5]
         myEvents = []
-     
-        for e in featuredEvents{
-            if(e.isMyEvent == true){
-                myEvents.append(e)
-            }
-        }
-        
+
+  
         featuredCollectionViewDelgate = EventCollectionViewDelegate(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID, view: self)
         featuredCollectionViewDataSource = EventCollectionViewDataSource(events: featuredEvents, reuseIdentifier: FEATURED_REUSE_ID)
         
         // featured events collection layout
         let featuredLayout = UICollectionViewFlowLayout()
         featuredLayout.scrollDirection = .vertical
-        featuredLayout.minimumInteritemSpacing = padding
-        featuredLayout.minimumLineSpacing = padding*2
+        featuredLayout.minimumInteritemSpacing = Constants.padding
+        featuredLayout.minimumLineSpacing = Constants.padding*2
         featuredLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
         featuredCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        featuredCollectionView.backgroundColor = .lightGray
+        featuredCollectionView.backgroundColor = Constants.backgroundColor
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
@@ -92,14 +80,14 @@ class ViewController: UIViewController {
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
-        myLayout.minimumInteritemSpacing = padding
-        myLayout.minimumLineSpacing = padding
+        myLayout.minimumInteritemSpacing = Constants.padding
+        myLayout.minimumLineSpacing = Constants.padding
         myLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
         
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
         myEventsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myEventsCollectionView.backgroundColor = .lightGray
+        myEventsCollectionView.backgroundColor = Constants.backgroundColor
         myEventsCollectionView.dataSource = myEventsCollectionViewDataSource
         myEventsCollectionView.delegate = myEventsCollectionViewDelegate
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
@@ -109,25 +97,26 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        featuredLabel.textColor = .black
+        featuredLabel.font = Constants.titleFont
+        featuredLabel.textColor = Constants.titleTextColor
         view.addSubview(featuredLabel)
         
         myLabel = UILabel()
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Light", size: 20)
-        myLabel.textColor = .black
+        myLabel.font = Constants.titleFont
+        myLabel.textColor = Constants.titleTextColor
         view.addSubview(myLabel)
         
+        //searchBar not yet implemented
         searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Find an Event"
         searchBar.layer.cornerRadius = 10
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
-        //searchBar.delegate = self
+        searchBar.delegate = self
         view.addSubview(searchBar)
         
         setupConstraints()
@@ -171,13 +160,43 @@ class ViewController: UIViewController {
             ])
         
     }
-
+    
+    func presentAlert(title: String, desc: String) {
+        let alert = UIAlertController(title: title, message: desc, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ViewController: ChangeMyEventDelegate{
-    func MyEventChanged(to e: Event) {
-        viewDidLoad()
+    func MyEventChanged(to e: Event, newIsMyEventChanged: Bool) {
+        e.isMyEvent = newIsMyEventChanged
+        myEvents = []
+        for event in featuredEvents{
+            if(event.isMyEvent == true){
+                myEvents.append(event)
+            }
+        }
+        myEventsCollectionViewDataSource.setEvents(myEvents)
+        myEventsCollectionViewDelegate.setEvents(myEvents)
+        myEventsCollectionView.reloadData()
     }
     
 }
 
+extension ViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            let results = NetworkManager.getAllEvents().filter({$0.eventName.contains(searchText)})
+            if results.count == 0 {
+                presentAlert(title: "No Results Found", desc: "Sorry, we couldn't find any results. Try changing your search keywords.")
+            } else {
+                self.navigationController?.pushViewController(SearchResultViewController(data: results), animated: true)
+            }
+        } else {
+            presentAlert(title: "No Search Terms Entered", desc: "Please enter the name of the event you are searching for.")
+        }
+        
+        
+    }
+}
