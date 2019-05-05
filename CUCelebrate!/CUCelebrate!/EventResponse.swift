@@ -31,11 +31,10 @@ struct EventResponse : Codable {
 struct EventResponse1 : Codable {
     var id: Int
     var title: String
-    // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
     var month: Int
     var day: Int
     var year: Int
-    var time: Int // first 4 digits for start, last 4 for end.
+    var time: String
     var descr: String
     var location: String
     var category: String
@@ -46,7 +45,7 @@ struct CreateEventBody : Codable {
     var title: String
     // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
     var date_posted: Int
-    var time: Int // first 4 digits for start, last 4 for end.
+    var time: String
     var descr: String
     var location: String
     var category: String
@@ -56,7 +55,7 @@ struct GetEvent: Codable {
     var title: String
     // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
     var date_posted: Int
-    var time: Int // first 4 digits for start, last 4 for end.
+    var time: String
     var descr: String
     var location: String
     var category: String
@@ -70,28 +69,25 @@ class JSONConverter {
         let dummyDate = 0
         let dummyCategory = "Cat"
         
-        return CreateEventBody(title: event.eventName, date_posted: dummyDate, time: timeStringToInt(event.eventTime), descr: event.description, location: event.eventVenue, category: dummyCategory)
+        return CreateEventBody(title: event.eventName, date_posted: dummyDate, time: event.eventTime, descr: event.description, location: event.eventVenue, category: dummyCategory)
     }
     
     static func makeEventFromGet(_ event: GetEvent) -> Event {
         
         let dummyEventDate = "Date"
-        let dummyEventTime = "Time"
         
-        return Event(eventName: event.title, eventDate: dummyEventDate, eventTime: dummyEventTime, eventVenue: event.location, description: event.descr)
+        return Event(eventName: event.title, eventDate: dummyEventDate, eventTime: event.time, eventVenue: event.location, description: event.descr, category: event.category)
     }
     
     static func makeEventFromGetAll(_ event: EventResponse1) -> Event {
-        let dummyEventDate = "Date"
-        let dummyEventTime = "Time"
-        
         return Event(eventName: event.title,
                      eventDate: JSONConverter.eventIntToEventString(month: event.month,
                                                                     day: event.day,
                                                                     year: event.year),
-                     eventTime: dummyEventTime,
+                     eventTime: event.time,
                      eventVenue: event.location,
-                     description: event.descr)
+                     description: event.descr,
+                     category: event.category)
     }
     
     static func eventIntToEventString(month: Int, day: Int, year: Int) -> String {
@@ -113,40 +109,6 @@ class JSONConverter {
         }
         
         return monthStr + String(day) + ", " + String(year)
-    }
-    
-    // dateStringToInt( str: String ) -> Int
-    // Returns the int representation of a time range.
-    // i.e. "9:00 AM - 5:00 PM" -> 9001700.
-    static func timeStringToInt(_ str: String) -> Int {
-        // splits into an easier format
-        // "9:00 AM - 5:00 PM" -> ["9", "00", "AM", "5", "00", "PM"]
-        let strs = str.split(whereSeparator: {
-            let separators : [Character] = [" ", ":", "-"]
-            for s in separators {
-                if $0 == s { return true }
-            }
-            return false
-        })
-        
-        let first = simplifyTimeString(time: String(strs[0] + strs[1]), ampm: String(strs[2]))
-        let second = simplifyTimeString(time: String(strs[3] + strs[4]), ampm: String(strs[5]))
-        return Int(first + second)!
-    }
-    
-    static func timeIntToString(_ int: Int) -> String {
-        // Cannot implement: No way to get numbers with leading zeroes.
-        return "time int to string unimplemented"
-    }
-    // simplifyTimeString (time: String, ampm: String) -> String
-    // Requires: time is length 3 or 4, time has only digits in it, and
-    // ampm is either "AM" or "PM".
-    // Returns a string that accounts for AM / PM differences.
-    // i.e. ("900", "AM") -> "900", and ("800", "PM") -> "2000"
-    static func simplifyTimeString(time: String, ampm: String) -> String {
-        var number = Int(time)!
-        if ampm == "PM" {number += 1200}
-        return String(number)
     }
     
 }

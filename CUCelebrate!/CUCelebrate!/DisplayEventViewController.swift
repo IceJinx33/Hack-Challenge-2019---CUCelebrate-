@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class DisplayEventViewController: UIViewController {
 
@@ -42,6 +43,8 @@ class DisplayEventViewController: UIViewController {
     let lightPink = UIColor(red: 1, green: 0.4863, blue: 0.6667, alpha: 1.0)
     let gold = UIColor(red: 0.9, green: 0.5, blue: 0, alpha: 1.0)
     let orange = UIColor(red: 1, green: 0.4784, blue: 0.2863, alpha: 1.0)
+    
+    let mapURL: String = "https://www.google.com/maps/search/?api=1&query="
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -245,12 +248,37 @@ class DisplayEventViewController: UIViewController {
     @objc func saveWork(){
         delegate?.MyEventChanged(to: placeholderEvent, newIsMyEventChanged: placeholderEvent.isMyEvent)
         navigationController?.popViewController(animated: true)
-        NetworkManager.updateEvent(user: "User", event: placeholderEvent)
+       // NetworkManager.updateEvent(user: "User", event: placeholderEvent)
     }
-
+    
+    func encodeURL(venue: String) -> String{
+        var place: String = ""
+        for x in venue{
+            if(x==" "){
+                place = place + "+"
+            }
+            if(x==","){
+                place = place + "%20"
+            }
+            else{
+                place = place + String(x)
+            }
+        }
+        place = place.replacingOccurrences(of: " ", with: "")
+        return mapURL+place
+    }
+    
     @objc func findLocation(){
-        let navViewController = MapViewController()
-        navigationController?.pushViewController(navViewController, animated: true)
+        if let urlComponents = URLComponents (string: encodeURL(venue: placeholderEvent.eventVenue) ){
+            UIApplication.shared.open (urlComponents.url!)
+        }
+        else{
+            let alert = UIAlertController(title: "Server Error", message: "The server is unable to process the URL request at this moment.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
 }

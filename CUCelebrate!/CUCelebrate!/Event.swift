@@ -18,8 +18,9 @@ class Event {
     var description: String
     var isMyEvent: Bool
     var image: UIImage
+    var category: String
     
-    init(eventName: String, eventDate: String, eventTime: String, eventVenue: String, description: String, isMyEvent: Bool = false, image: UIImage = Constants.placeholderImage){
+    init(eventName: String, eventDate: String, eventTime: String, eventVenue: String, description: String, isMyEvent: Bool = false, image: UIImage = Constants.placeholderImage, category: String = ""){
         self.eventName = eventName
         self.eventDate = eventDate
         self.eventTime = eventTime
@@ -27,5 +28,6 @@ class Event {
         self.description = description
         self.isMyEvent = isMyEvent
         self.image = image
+        self.category = category
     }
 }

@@ -11,11 +11,22 @@ import Alamofire
 
 class NetworkManager {
     
-    static let NETWORKS_ON : Bool = false
+    static let NETWORKS_ON : Bool = true
     
-    static func getAllEvents() -> [Event] {
+    static func generateDummyData() -> [Event] {
+        var list : [Event] = []
+        for i in 1..<4 {
+            list.append(Event(eventName: "Event \(i) from DB",
+                eventDate: "May \(i), 2019", eventTime: "\(6+i) PM",
+                eventVenue: "Gates Hall",
+                description: "Event number \(i) of an exciting list of events you searched for. Actual search TBA, as networking isn't ready yet."))
+        }
+        return list
+    }
+    
+    static func getAllEvents(completion: @escaping ([Event]) -> Void) {
+        var result : [Event] = []
         if NETWORKS_ON {
-            var result : [Event] = []
             Alamofire.request(Constants.getAllEventsEndpoint, method: .get).validate().responseData { (response) in
                 
                 switch response.result {
@@ -38,31 +49,10 @@ class NetworkManager {
                     print(error.localizedDescription)
                     result = []
                 }
-                
-            }
-            return result
+             }
         }
-        return generateDummyData()
-        
-    }
-    
-    static func updateEvent(user: String, event: Event) {
-        // 1. Gather request body
-        let parameters = EventResponse.makeEventResponse(event)
-        
-        // send over network
-        
-        
-    }
-    
-    static func generateDummyData() -> [Event] {
-        var list : [Event] = []
-        for i in 1..<4 {
-            list.append(Event(eventName: "Event \(i) from DB",
-                eventDate: "May \(i), 2019", eventTime: "\(6+i) PM",
-                eventVenue: "Gates Hall",
-                description: "Event number \(i) of an exciting list of events you searched for. Actual search TBA, as networking isn't ready yet."))
+        if(result.count == 0){
+            result = generateDummyData()
         }
-        return list
     }
 }

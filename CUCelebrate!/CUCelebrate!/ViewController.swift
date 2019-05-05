@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 
         let cellSize = (view.safeAreaLayoutGuide.layoutFrame.width - 20)
 
-        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
+        let e1 = Event(eventName: "CU Downtown", eventDate: "Sep 1, 2018", eventTime: "1 PM EDT", eventVenue: "Downtown Ithaca, NY", description: "A free and exciting way to explore the culture of Downtown Ithaca, with dances and songs and food!!", image: UIImage(named: "e1")!)
         let e2 = Event(eventName: "Dragon Day 2019", eventDate: "Mar 29, 2019", eventTime: "12 PM EDT", eventVenue: "Arts Quad", description: "Come see the dragon and the phoenix parade around campus!!" , image: UIImage(named: "e2")!)
         let e3 = Event(eventName: "CIS Formal: Party at Gatsby's", eventDate: "Apr 27, 2019", eventTime: "9 PM EDT", eventVenue: "The Statler Hotel", description: "Join ACSU, WICC and URMC to celebrate the end of the semester with a Gatsby themed formal at the Statler Hotel! It will be a fun filled night with friends, food, dancing and more!!" + "\n" + "Suggested Attire: Semi-Formal" + "\n" + "Tickets are $15 each." , image: UIImage(named: "e3")!)
         let e4 = Event(eventName: "Cornell Chamber Orchestra Concert", eventDate: "Apr 26, 2019", eventTime: "7 PM EDT", eventVenue: "Barnes Hall", description: "We will by playing music by Drdla, Bach, Grieg, Holst as well as compositions by students. This event is free and open to the public! We look forward to seeing you there!" , image: UIImage(named: "e4")!)
@@ -126,10 +126,11 @@ class ViewController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
-        searchBar.delegate = self
+        //searchBar.delegate = self
         view.addSubview(searchBar)
 
         setupConstraints()
+        getOnlineEvents()
     }
 
     func setupConstraints() {
@@ -176,6 +177,16 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
+    
+    func getOnlineEvents() {
+        NetworkManager.getAllEvents { eventsArray in
+            self.featuredEvents = eventsArray
+            DispatchQueue.main.async {
+                self.featuredCollectionView.reloadData()
+            }
+        }
+    }
+    
 }
 
 extension ViewController: ChangeMyEventDelegate{
