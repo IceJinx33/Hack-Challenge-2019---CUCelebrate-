@@ -7,25 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct EventResponseEnvelope : Codable {
     var success: Bool
     var data: [EventResponse1]
-}
-
-struct EventResponse : Codable {
-    
-    var name: String
-    var date: String
-    var time: String
-    var venue: String
-    var desc: String
-    var isMyEvent: Bool
-    var image: String // TODO: Be able to receive images from DB
-    
-    static func makeEventResponse(_ event: Event) -> EventResponse {
-        return EventResponse(name: event.eventName, date: event.eventDate, time: event.eventTime, venue: event.eventVenue, desc: event.description, isMyEvent: event.isMyEvent, image: "TODO make image")
-    }
 }
 
 struct EventResponse1 : Codable {
@@ -39,11 +25,11 @@ struct EventResponse1 : Codable {
     var location: String
     var category: String
     var interest: Int
+    var imageURL: String
 }
 
 struct CreateEventBody : Codable {
     var title: String
-    // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
     var date_posted: Int
     var time: String
     var descr: String
@@ -53,7 +39,6 @@ struct CreateEventBody : Codable {
 
 struct GetEvent: Codable {
     var title: String
-    // Warning: Jan 11th 2019 (1112019) = Nov 1st 2019 (1112019)
     var date_posted: Int
     var time: String
     var descr: String
@@ -80,6 +65,15 @@ class JSONConverter {
     }
     
     static func makeEventFromGetAll(_ event: EventResponse1) -> Event {
+        let url = URL(string: event.imageURL)
+        var downloadImage: UIImage!
+        
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: url!)
+            DispatchQueue.main.async {
+                downloadImage = UIImage(data: data!)
+            }
+        }
         return Event(eventName: event.title,
                      eventDate: JSONConverter.eventIntToEventString(month: event.month,
                                                                     day: event.day,
@@ -87,7 +81,9 @@ class JSONConverter {
                      eventTime: event.time,
                      eventVenue: event.location,
                      description: event.descr,
-                     category: event.category)
+                     image: downloadImage,
+                     category: event.category
+                     )
     }
     
     static func eventIntToEventString(month: Int, day: Int, year: Int) -> String {

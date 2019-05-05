@@ -32,7 +32,6 @@ class NetworkManager {
                 switch response.result {
                     
                 case .success(let data):
-                    
                     let jsonDecoder = JSONDecoder()
                     if let eventResponse = try? jsonDecoder.decode(EventResponseEnvelope.self, from: data) {
                         if eventResponse.success {

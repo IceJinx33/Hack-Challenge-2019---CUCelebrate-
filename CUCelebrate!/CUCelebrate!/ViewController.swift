@@ -27,7 +27,6 @@ class ViewController: UIViewController {
     var tempMyEvents: [Event]!
     var featuredLabel: UILabel!
     var myLabel: UILabel!
-    var mainSearchBar: UISearchBar!
 
     let FEATURED_REUSE_ID = "featuredEventsCellReuseIdentifier"
     let MY_EVENTS_REUSE_ID = "myEventsCellReuseIdentifier"
@@ -127,30 +126,7 @@ class ViewController: UIViewController {
         myLabel.font = Constants.titleFont
         myLabel.textColor = Constants.titleTextColor
         view.addSubview(myLabel)
-
-        //searchBar not yet implemented
-        mainSearchBar = UISearchBar()
-        mainSearchBar.translatesAutoresizingMaskIntoConstraints = false
-        mainSearchBar.placeholder = "Find an Event"
-        mainSearchBar.layer.cornerRadius = 10
-        mainSearchBar.searchBarStyle = .minimal
-        mainSearchBar.backgroundColor = .white
-        mainSearchBar.delegate = self
-        view.addSubview(mainSearchBar)
         
-        self.searchController.searchResultsUpdater = self
-        self.searchController.delegate = self
-        self.searchController.searchBar.delegate = self
-        
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.dimsBackgroundDuringPresentation = true
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search for tools and resources"
-        searchController.searchBar.sizeToFit()
-        
-        searchController.searchBar.becomeFirstResponder()
-        
-
         setupConstraints()
         getOnlineEvents()
     }
@@ -177,19 +153,13 @@ class ViewController: UIViewController {
             featuredLabel.widthAnchor.constraint(equalToConstant: 300),
             featuredLabel.heightAnchor.constraint(equalToConstant: 30)
             ])
-
-        NSLayoutConstraint.activate([
-            mainSearchBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            mainSearchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mainSearchBar.widthAnchor.constraint(equalToConstant: 300),
-            mainSearchBar.heightAnchor.constraint(equalToConstant: 40)
-            ])
+        
 
         NSLayoutConstraint.activate([
             featuredCollectionView.topAnchor.constraint(equalTo: featuredLabel.bottomAnchor, constant: 10),
             featuredCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             featuredCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            featuredCollectionView.bottomAnchor.constraint(equalTo: mainSearchBar.topAnchor, constant: -10)
+            featuredCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
             ])
 
     }
@@ -226,23 +196,4 @@ extension ViewController: ChangeMyEventDelegate{
 
 }
 
-extension ViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
-    func updateSearchResults(for searchController: UISearchController) {
-        if(mainSearchBar.text == nil || mainSearchBar.text == ""){
-            featuredEvents = tempMyEvents
-            isSearching = false
-            view.endEditing(true)
-            featuredCollectionView.reloadData()
-        }
-        else{
-            isSearching = true
-            featuredEvents = tempMyEvents.filter({$0.eventName.range(of: mainSearchBar.text!, options: .caseInsensitive) != nil || $0.category.range(of: mainSearchBar.text!, options: .caseInsensitive) != nil})
-            for x in featuredEvents{
-                print(x.eventName)
-            }
-            featuredCollectionView.reloadData()
-            //searchController.searchBar.resignFirstResponder()
-    }
-        
-  }
-}
+
