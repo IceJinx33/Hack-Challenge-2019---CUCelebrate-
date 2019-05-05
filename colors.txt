@@ -1,0 +1,6 @@
+darkSlate = UIColor(red: 50, green: 55, blue: 84, alpha: 1.00)
+slate = UIColor(red: 66, green: 66, blue: 102, alpha: 1.00)
+lightSlate = UIColor(red: 78, green: 81, blue: 114, alpha: 1.00)
+violet = UIColor(red: 116, green: 82, blue: 253, alpha: 1.00)
+pink = UIColor(red: 232, green: 92, blue: 147, alpha: 1.00)
+lavendar = UIColor(red: 100, green: 57, blue: 255, alpha: 1.00)
