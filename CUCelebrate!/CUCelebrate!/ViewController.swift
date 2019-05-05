@@ -70,14 +70,14 @@ class ViewController: UIViewController {
         // featured events collection layout
         let featuredLayout = UICollectionViewFlowLayout()
         featuredLayout.scrollDirection = .vertical
-        featuredLayout.minimumInteritemSpacing = padding
-        featuredLayout.minimumLineSpacing = padding*2
+        featuredLayout.minimumInteritemSpacing = Constants.padding
+        featuredLayout.minimumLineSpacing = Constants.padding*2
         featuredLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
 
         // featured events collection view
         featuredCollectionView = UICollectionView(frame: .zero, collectionViewLayout: featuredLayout)
         featuredCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        featuredCollectionView.backgroundColor = .clear
+        featuredCollectionView.backgroundColor = Constants.backgroundColor
         featuredCollectionView.dataSource = featuredCollectionViewDataSource
         featuredCollectionView.delegate = featuredCollectionViewDelgate
         featuredCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: FEATURED_REUSE_ID)
@@ -90,14 +90,14 @@ class ViewController: UIViewController {
         // my events collection layout
         let myLayout = UICollectionViewFlowLayout()
         myLayout.scrollDirection = .horizontal
-        myLayout.minimumInteritemSpacing = padding
-        myLayout.minimumLineSpacing = padding
+        myLayout.minimumInteritemSpacing = Constants.padding
+        myLayout.minimumLineSpacing = Constants.padding
         myLayout.itemSize = CGSize(width: cellSize, height: 0.5*cellSize)
 
         // featured events collection layout
         myEventsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: myLayout)
         myEventsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myEventsCollectionView.backgroundColor = .clear
+        myEventsCollectionView.backgroundColor = Constants.backgroundColor
         myEventsCollectionView.dataSource = myEventsCollectionViewDataSource
         myEventsCollectionView.delegate = myEventsCollectionViewDelegate
         myEventsCollectionView.register(EventCollectionViewCell.self, forCellWithReuseIdentifier: MY_EVENTS_REUSE_ID)
@@ -107,16 +107,16 @@ class ViewController: UIViewController {
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredLabel.text = "Featured Events"
         featuredLabel.textAlignment = .center
-        featuredLabel.font = UIFont(name: "Copperplate-Bold", size: 24)
-        featuredLabel.textColor = .white
+        featuredLabel.font = Constants.titleFont
+        featuredLabel.textColor = Constants.titleTextColor
         view.addSubview(featuredLabel)
 
         myLabel = UILabel()
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.text = "My Events"
         myLabel.textAlignment = .center
-        myLabel.font = UIFont(name: "Copperplate-Bold", size: 24)
-        myLabel.textColor = .white
+        myLabel.font = Constants.titleFont
+        myLabel.textColor = Constants.titleTextColor
         view.addSubview(myLabel)
 
         //searchBar not yet implemented
@@ -126,7 +126,7 @@ class ViewController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
-        //searchBar.delegate = self
+        searchBar.delegate = self
         view.addSubview(searchBar)
 
         setupConstraints()
@@ -171,6 +171,11 @@ class ViewController: UIViewController {
 
     }
 
+    func presentAlert(title: String, desc: String) {
+        let alert = UIAlertController(title: title, message: desc, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ViewController: ChangeMyEventDelegate{
