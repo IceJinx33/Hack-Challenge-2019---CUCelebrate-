@@ -242,10 +242,14 @@ class DisplayEventViewController: UIViewController {
 
     @objc func checkBox(){
         checkButton.isSelected = !checkButton.isSelected
-        placeholderEvent.isMyEvent = !placeholderEvent.isMyEvent
     }
 
     @objc func saveWork(){
+        if(checkButton.isSelected == true){
+            placeholderEvent.isMyEvent = true
+        }else{
+            placeholderEvent.isMyEvent = false
+        }
         delegate?.MyEventChanged(to: placeholderEvent, newIsMyEventChanged: placeholderEvent.isMyEvent)
         navigationController?.popViewController(animated: true)
        // NetworkManager.updateEvent(user: "User", event: placeholderEvent)
