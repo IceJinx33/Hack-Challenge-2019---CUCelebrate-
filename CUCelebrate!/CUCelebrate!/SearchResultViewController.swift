@@ -20,7 +20,7 @@ class SearchResultViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         title = "Search Results"
         searchResultsDataSource = EventCollectionViewDataSource(events: data, reuseIdentifier: SEARCH_REUSE_ID)
-        searchResultsDelegate = EventCollectionViewDelegate(events: data, reuseIdentifier: SEARCH_REUSE_ID, view: self)
+        //searchResultsDelegate = EventCollectionViewDelegate(events: data, reuseIdentifier: SEARCH_REUSE_ID, view: self)
     }
     
     override func viewDidLoad() {
